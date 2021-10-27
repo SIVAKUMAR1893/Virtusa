@@ -1,0 +1,13 @@
+pipeline{
+    agent any
+    stages{
+        stage('create'){
+            steps{
+               sh "mkdir /root/jenkins/jenkinsfile.txt"
+               sh "cd /root/jenkins/"
+               sh "echo 'jenkins file created' >> jenkinsfile.txt"
+               sh "cat jenkinsfile.txt"
+            }
+        }
+      }
+   }
