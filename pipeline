@@ -8,6 +8,7 @@ pipeline{
         }
         stage('create'){
             steps{
+            sh "rm -rf /opt/jenkins"
                sh "mkdir /opt/jenkins"
                sh "cd /opt/jenkins/"
                sh "touch jenkinsfile.txt"
