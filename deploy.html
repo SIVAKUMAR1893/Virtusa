@@ -1,0 +1,22 @@
+pipeline{
+    agent any
+     stages{
+        stage("create clone"){
+            steps{
+                git credentialsId: 'GIT', url: 'https://github.com/SIVAKUMAR1893/Virtusa.git'
+            }
+        }
+        stage('createdir'){
+            steps{
+                sh ("jar -cvf deploy.war *")
+            }
+        }
+        stage('copy'){
+            steps{ 
+               
+                     sh ("cp /var/lib/jenkins/workspace/deploytomcat/deploy.war /opt/apache-tomcat-9.0.54/webapps")
+            
+        }
+    }
+    }
+}
