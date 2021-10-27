@@ -1,21 +1,40 @@
 pipeline{
     agent any
     stages{
-      stage("create clone"){
-            steps{
-                git credentialsId: 'GIT', url: 'https://github.com/SIVAKUMAR1893/Virtusa.git'
-            }
-        }
         stage('create'){
             steps{
-            sh "rm -rf /opt/jenkins"
-               sh "mkdir /opt/jenkins"
-               sh "cd /opt/jenkins/"
                sh "touch /opt/jenkins/jenkinsfile.txt"
-               sh "echo "jenkins file created" >> jenkinsfile.txt"
-               sh "cat jenkinsfile.txt"
+               sh "chmod 755 /opt/jenkins/jenkinsfile.txt"
+               sh "ls -lrth /opt/jenkins/"
             }
         }
         
-      }
-   }
+    stage('write') {
+           steps {
+               sh "echo 'hi this is write statement' >> /opt/jenkins/jenkinsfile.txt"
+               
+           }
+    }
+    stage('read') {
+           steps {
+              sh "cat /opt/jenkins/jenkinsfile.txt"
+           }
+    }
+    stage('deletecontent') {
+           steps {
+              sh "true > /opt/jenkins/jenkinsfile.txt"
+           }
+    }
+    stage('check') {
+           steps {
+              sh "cat /opt/jenkins/jenkinsfile.txt"
+           }
+    }
+    stage('deletefile') {
+           steps {
+              sh "rm -rf /opt/jenkins/jenkinsfile.txt"
+              sh "ls -lrth /opt/jenkins/"
+           }
+    }
+    }
+}
