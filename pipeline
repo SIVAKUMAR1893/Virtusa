@@ -11,7 +11,7 @@ pipeline{
             sh "rm -rf /opt/jenkins"
                sh "mkdir /opt/jenkins"
                sh "cd /opt/jenkins/"
-               sh "touch jenkinsfile.txt"
+               sh "touch /opt/jenkins/jenkinsfile.txt"
                sh "echo 'jenkins file created' >> jenkinsfile.txt"
                sh "cat jenkinsfile.txt"
             }
