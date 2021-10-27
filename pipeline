@@ -1,6 +1,11 @@
 pipeline{
     agent any
     stages{
+    stage("create clone"){
+            steps{
+                git credentialsId: 'GIT', url: 'https://github.com/SIVAKUMAR1893/Virtusa.git'
+            }
+        }
         stage('create'){
             steps{
                sh "touch /opt/jenkins/jenkinsfile.txt"
