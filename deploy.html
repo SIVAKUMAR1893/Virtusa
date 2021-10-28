@@ -14,7 +14,7 @@ pipeline{
         stage('copy'){
             steps{ 
                
-                     sh ("cp /var/lib/jenkins/workspace/pipelinejob/index.war /opt/apache-tomcat-9.0.54/webapps")
+                     sh ("cp /var/lib/jenkins/workspace/pipelinejob/index.war /opt/tomcat/webapps")
             
         }
     }
