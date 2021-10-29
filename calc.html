@@ -1,0 +1,22 @@
+pipeline{
+    agent any
+     stages{
+        stage("create clone"){
+            steps{
+                git credentialsId: 'GIT', url: 'https://github.com/SIVAKUMAR1893/Virtusa.git'
+            }
+        }
+        stage('createdir'){
+            steps{
+                sh ("jar -cvf calculator.war *")
+            }
+        }
+        stage('copy'){
+            steps{ 
+               
+                     sh ("cp /var/lib/jenkins/workspace/pipecalc/calculator.war /opt/tomcat/webapps")
+            
+        }
+    }
+    }
+}
