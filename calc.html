@@ -8,7 +8,7 @@ pipeline{
         }
         stage('createdir'){
             steps{
-                sh ("jar -cvf calculator.war calc.html")
+                sh ("jar -cvf calculator.war calculator.html")
             }
         }
         stage('copy'){
