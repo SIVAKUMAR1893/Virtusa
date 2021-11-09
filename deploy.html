@@ -8,7 +8,7 @@ pipeline{
         }
         stage('createdir'){
             steps{
-                sh ("jar -cvf index.war *")
+                sh ("jar -cvf index.war index.html")
             }
         }
         stage('copy'){
