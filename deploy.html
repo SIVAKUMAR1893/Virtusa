@@ -6,12 +6,12 @@ pipeline{
                 git credentialsId: 'GIT', url: 'https://github.com/SIVAKUMAR1893/Virtusa.git'
             }
         }
-        stage('createdir'){
+        stage('warfile_creation'){
             steps{
                 sh ("jar -cvf index.war index.html")
             }
         }
-        stage('copy'){
+        stage('deploy_to_tomcat'){
             steps{ 
                
                      sh ("cp /var/lib/jenkins/workspace/pipelinejob/index.war /opt/tomcat/webapps")
