@@ -4,12 +4,17 @@ pipeline {
  
 
     stages {
+    stage("create clone"){
+            steps{
+                git credentialsId: 'GIT', url: 'https://github.com/SIVAKUMAR1893/Virtusa.git'
+            }
+        }
 
         
 
         stage("Publish NUnit Test Report") {
             steps {
-                nunit testResultsPattern: 'test.xml'
+                nunit testResultsPattern: "Virtusa/test.xml"
             }
         }
 
