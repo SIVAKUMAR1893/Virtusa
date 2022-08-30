@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    ...
+
+    stages {
+
+        ...
+
+        stage("Publish NUnit Test Report") {
+            steps {
+                nunit testResultsPattern: 'test.xml'
+            }
+        }
+
+        ...
+
+    }
+}
