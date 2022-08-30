@@ -1,11 +1,11 @@
 pipeline {
     agent any
 
-    ...
+ 
 
     stages {
 
-        ...
+        
 
         stage("Publish NUnit Test Report") {
             steps {
@@ -13,7 +13,7 @@ pipeline {
             }
         }
 
-        ...
+        
 
     }
 }
