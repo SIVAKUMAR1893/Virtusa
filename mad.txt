@@ -1,0 +1,104 @@
+package build
+
+pipeline cd-quick-task{
+  agent {
+    label 'TODO: REPLACE WITH DOCKER NODE NAME'
+    customWorkspace '/workspace'
+  }
+  options { timestamps() }
+  environment { //https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
+    //https://plugins.jenkins.io/build-user-vars-plugin/
+    triggered_by = (BUILD_USER_ID != null) ? "${BUILD_USER_ID}" : "GIT_TRIGGER"
+    taskname = "cd-quick-task"
+    taskRunName = "${BUILD_TAG}"
+    ENV_NAME = "DEVCD"
+    // dockerd started in sidecar
+    // adding docker to the path
+    PATH="${PATH}:/var/sidecar_shared_vol/"
+
+    if(ghprbPullId != null){
+      //is pull request trigger: https://plugins.jenkins.io/ghprb/#plugin-content-environment-variables
+      basebranch = "${ghprbSourceBranch}"
+      revision = "${ghprbActualCommit}"
+      sha = "${sha1}"
+      apiurl = "${ghprbPullLink}"
+      prnum = "${ghprbPullId}"
+    }else{
+      // is normal git trigger: https://plugins.jenkins.io/git/#plugin-content-environment-variables
+      basebranch = "${GIT_BRANCH}"
+      revision = "${GIT_COMMIT}"
+    }
+    steplist = ["git-sync",
+                "pre-deploy",
+                "pre-deploy-check",
+                "pre-terrafrom",
+                "deploy-terraform",
+                "post-terraform",
+                "deploy-helm",
+                "smoke-test",
+                "security-check",
+                "ops-assurance",
+                "cd-ops-commit"]
+  }
+
+  stages {
+    stage("git-sync") {
+      steps {
+        sh '''
+            echo "triggered_by=${triggered_by}"
+            echo "taskname=${taskname}"
+            echo "stepname=${stepname}"
+            echo "gitApiKey=${gitApiKey}"
+            echo "revision=${revision}"
+            echo "sha=${sha}"
+            echo "apiurl=${apiurl}"
+            echo "basebranch=${basebranch}"
+            echo "prnum=${prnum}"
+            echo "steplist=${steplist[@]}"
+            echo "Running: /bin/git-sync.sh"
+            # note: this script comes from the base image itself
+            bash /bin/git-sync.sh
+        '''
+      }
+    }
+    doStep("pre-deploy", "cd-predeploy.sh CDQUICK", true)
+    doStep("pre-deploy-check", "deploy_precheck.sh")
+    doStep("pre-terraform", "pre-terraform.sh")
+    doStep("deploy-terraform", "deploy_terraform.sh")
+    doStep("post-terraform", "post-terraform.sh")
+    doStep("deploy-helm", "deploy_helm.sh")
+    doStep("smoke-test", "runTestcase.wrapper.sh run-smoketests.sh smoketests.xml smoketests")
+    doStep("security-check", "deploy_check_vulnerabilities.sh", false, false)
+    doStep("ops-assurance", "policy-gate-check.sh")
+    doStep("cd-ops-commit", "ops-commit.sh")
+  }
+}
+
+def doStep(String stageName, String scriptToRun, sourceGit = false, doFailOnError = true) {
+  stage(stageName) {
+    sh '''
+      echo "triggered_by=${triggered_by}"
+      echo "taskname=${taskname}"
+      echo "taskRunName=${taskRunName}"
+      echo "stepname=${stepname}"
+      echo "gitApiKey=${gitApiKey}"
+      echo "revision=${revision}"
+      echo "sha=${sha}"
+      echo "apiurl=${apiurl}"
+      # dockerd started in sidecar
+      # adding docker to the path
+      export PATH=${PATH}:/var/sidecar_shared_vol/
+      if [ "${sourceGit}" == "true" ]; then
+        source /workspace/git.props
+      else
+        source build.properties.src
+      fi
+      echo "Running: /whc-commons/scripts/${scriptToRun}"
+      if [ "${doFailOnError}" == "true" ]; then
+        bash /whc-commons/scripts/job-wrapper.sh "bash /whc-commons/scripts/${scriptToRun}" 2>&1
+      else
+        bash /whc-commons/scripts/job-wrapper.sh "bash /whc-commons/scripts/${scriptToRun}" 2>&1 || true
+      fi
+      '''
+  }
+}
