@@ -41,5 +41,10 @@ pipeline{
               sh " ls -lrth /opt/jenkins/"
            }
     }
+      stage('Publish test results') {
+      steps {
+          junit '**/test-results/test/*.xml'
+      }
+  }
     }
 }
