@@ -8,37 +8,37 @@ pipeline{
         }
         stage('create'){
             steps{
-               sh "sudo touch /opt/jenkins/jenkinsfile.txt"
-               sh "sudo chmod 755 /opt/jenkins/jenkinsfile.txt"
+               sh "sudo -S touch /opt/jenkins/jenkinsfile.txt"
+               sh "sudo -S chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
             }
         }
         
     stage('write') {
            steps {
-               sh "sudo echo 'hi this is write statement' >> /opt/jenkins/jenkinsfile.txt"
+               sh "sudo -S echo 'hi this is write statement' >> /opt/jenkins/jenkinsfile.txt"
                
            }
     }
     stage('read') {
            steps {
-              sh "sudo cat /opt/jenkins/jenkinsfile.txt"
+              sh "sudo -S cat /opt/jenkins/jenkinsfile.txt"
            }
     }
     stage('deletecontent') {
            steps {
-              sh "sudo true > /opt/jenkins/jenkinsfile.txt"
+              sh "sudo -S true > /opt/jenkins/jenkinsfile.txt"
            }
     }
     stage('check') {
            steps {
-              sh "sudo cat /opt/jenkins/jenkinsfile.txt"
+              sh "sudo -S cat /opt/jenkins/jenkinsfile.txt"
            }
     }
     stage('deletefile') {
            steps {
-              sh "sudo rm -rf /opt/jenkins/jenkinsfile.txt"
-              sh "sudo ls -lrth /opt/jenkins/"
+              sh "sudo -S rm -rf /opt/jenkins/jenkinsfile.txt"
+              sh "sudo -S ls -lrth /opt/jenkins/"
            }
     }
     }
