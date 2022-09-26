@@ -69,7 +69,7 @@ pipeline{
       stage('Publish test results') {
       steps {
           junit skipPublishingChecks: true, testResults: '**/*.xml'
-          sh "test ${currentBuild.currentResult} != UNSTABLE"
+         // sh "test ${currentBuild.currentResult} != UNSTABLE"
       }
   }
     }
