@@ -8,6 +8,8 @@ pipeline{
         }
         stage('create'){
             steps{
+            sh "pwd"
+            sh "cd /opt/jenkins/"
                sh " touch /opt/jenkins/jenkinsfile.txt"
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
