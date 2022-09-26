@@ -66,9 +66,9 @@ pipeline{
               sh " ls -lrth /opt/jenkins/"
            }
     }
-    stage ("Report"){
+    stage ("Report"){ steps{
 	testResultsAggregator jobs:[[jobName: 'My CI Job1'], [jobName: 'My CI Job2'], [jobName: 'My CI Job3']]
-}`
+}`}
       stage('Publish test results') {
       steps {
           junit skipPublishingChecks: true, testResults: '**/*.xml'
