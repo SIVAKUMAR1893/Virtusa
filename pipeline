@@ -69,7 +69,7 @@ pipeline{
     
       stage('Publish test results') {
       steps {
-          junit skipPublishingChecks: true, testResults: '/c/Users/SIVAKUMARGAN/virtusa/Virtusa/test/*.xml'
+          junit skipPublishingChecks: true, testResults: '**/test/*.xml'
          // sh "test ${currentBuild.currentResult} != UNSTABLE"
       }
   }
