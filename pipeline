@@ -70,6 +70,7 @@ pipeline{
      stage('Publish test results') {
       steps {
           junit skipPublishingChecks: true, testResults: '**/*.xml'
+          JunitTestResultStorage() 
       }
   } 
     }
