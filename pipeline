@@ -69,7 +69,7 @@ pipeline{
     
      stage('Publish test results') {
       steps {
-          junit '**/*.xml'
+          junit skipPublishingChecks: true, testResults: '**/cpputest_*.xml'
       }
   } 
     }
