@@ -53,17 +53,20 @@ pipeline{
     stage('deletecontent') {
            steps {
               sh " true > /opt/jenkins/jenkinsfile.txt"
+              junit skipPublishingChecks: true, testResults: '**/*.xml'
            }
     }
     stage('check') {
            steps {
               sh " cat /opt/jenkins/jenkinsfile.txt"
+              junit skipPublishingChecks: true, testResults: '**/*.xml'
            }
     }
     stage('deletefile') {
            steps {
               sh " rm -rf /opt/jenkins/jenkinsfile.txt"
               sh " ls -lrth /opt/jenkins/"
+              junit skipPublishingChecks: true, testResults: '**/*.xml'
            }
     }
     
