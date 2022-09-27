@@ -36,18 +36,20 @@ pipeline{
                sh " touch /opt/jenkins/jenkinsfile.txt"
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
+                junit skipPublishingChecks: true, testResults: '**/create_*.xml'
             }
         }
         
     stage('write') {
            steps {
                sh " echo 'hi this is write statement' >> /opt/jenkins/jenkinsfile.txt"
-               
+                junit skipPublishingChecks: true, testResults: '**/*.xml'
            }
     }
     stage('read') {
            steps {
               sh " cat /opt/jenkins/jenkinsfile.txt"
+               junit skipPublishingChecks: true, testResults: '**/*.xml'
            }
     }
     stage('deletecontent') {
@@ -73,7 +75,7 @@ pipeline{
      stage('Publish test results') {
       steps {
           junit skipPublishingChecks: true, testResults: '**/*.xml'
-          JunitTestResultStorage() 
+          
       }
   } 
     }
