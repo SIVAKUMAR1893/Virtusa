@@ -49,7 +49,7 @@ pipeline{
     stage('read') {
            steps {
               sh " cat /opt/jenkins/jenkinsfile.txt"
-               junit skipPublishingChecks: true, testResults: '**/*.xml'
+               junit skipPublishingChecks: true, testResults: '/var/lib/jenkins/workspace/pipeline/testresult/test.xml'
            }
     }
     stage('deletecontent') {
