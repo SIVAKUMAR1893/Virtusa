@@ -1,11 +1,24 @@
-node {
-    stage('Example') {
-        try {
-            sh 'exit 1'
+pipeline { 
+    agent any 
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+        stage('Build') { 
+            steps { 
+                sh 'make' 
+            }
         }
-        catch (exc) {
-            echo 'Something failed, I should sound the klaxons!'
-            throw
+        stage('Test'){
+            steps {
+                sh 'make check'
+                junit 'reports/**/*.xml' 
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'make publish'
+            }
         }
     }
 }
