@@ -12,6 +12,7 @@ pipeline{
             steps{
             
             sh "pwd"
+            sh "mkdir -p /var/lib/jenkins/workspace/pipeline/target"
             sh "cd /opt/jenkins/"
                sh " touch /opt/jenkins/jenkinsfile.txt"
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
