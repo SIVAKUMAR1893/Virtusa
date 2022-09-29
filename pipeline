@@ -18,7 +18,7 @@ pipeline{
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
                
-                junit '**/target/*.xml'
+                junit 'pipeline/target/*.xml'
                
                 sh "cat /var/lib/jenkins/workspace/pipeline/*.xml"
                 
