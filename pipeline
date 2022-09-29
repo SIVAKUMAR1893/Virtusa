@@ -1,6 +1,6 @@
 import hudson.tasks.test.AbstractTestResultAction
 import hudson.model.Actionable
-import org.junit.platform.reporting.legacy.xml
+//import org.junit.platform.reporting.legacy.xml
 
 @NonCPS
 def getTestSummary = { ->
