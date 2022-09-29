@@ -16,10 +16,10 @@ pipeline{
                sh " touch /opt/jenkins/jenkinsfile.txt"
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
-               sh "cat /var/lib/jenkins/workspace/pipeline/test.xml"
-                junit skipPublishingChecks: true, testResults: '**/*.xml'
                
-                sh "cat /var/lib/jenkins/workspace/pipeline/test.xml"
+                junit skipPublishingChecks: true, testResults: '**/test*.xml'
+               
+                sh "cat /var/lib/jenkins/workspace/pipeline/*.xml"
                 
             }
         }
