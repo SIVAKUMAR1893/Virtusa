@@ -32,8 +32,7 @@ pipeline{
         }
         stage('create'){
             steps{
-            env.WORKSPACE = pwd()
-def version = readFile "${env.WORKSPACE}/test.xml
+            
             sh "pwd"
             sh "cd /opt/jenkins/"
                sh " touch /opt/jenkins/jenkinsfile.txt"
@@ -41,6 +40,7 @@ def version = readFile "${env.WORKSPACE}/test.xml
                sh "ls -lrth /opt/jenkins/"
                 junit '**/*.xml'
                 archiveArtifacts artifacts: '**/*.xml'
+                sh "cat /var/lib/jenkins/workspace/pipeline/test.xml"
                 
             }
         }
