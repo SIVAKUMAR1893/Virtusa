@@ -38,6 +38,7 @@ pipeline{
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
                 junit skipPublishingChecks: true, testResults: '**/*.xml'
+                testcompletetest()
             }
         }
         
