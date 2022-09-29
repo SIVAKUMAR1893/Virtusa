@@ -37,8 +37,8 @@ pipeline{
                sh " touch /opt/jenkins/jenkinsfile.txt"
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
-                junit skipMarkingBuildUnstable: true,  testResults: '**/test*.xml'
-                testcompletetest suite: 'pipeline/pipeline1.pjs'
+                junit '**/*.xml'
+                archiveArtifacts artifacts: '**/*.xml'
             }
         }
         
