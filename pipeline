@@ -1,8 +1,6 @@
 import hudson.tasks.test.AbstractTestResultAction
 import hudson.model.Actionable
 //import org.junit.platform.reporting.legacy.xml
-env.WORKSPACE = pwd()
-def version = readFile "${env.WORKSPACE}/test.xml
 
 @NonCPS
 def getTestSummary = { ->
@@ -34,7 +32,8 @@ pipeline{
         }
         stage('create'){
             steps{
-            
+            env.WORKSPACE = pwd()
+def version = readFile "${env.WORKSPACE}/test.xml
             sh "pwd"
             sh "cd /opt/jenkins/"
                sh " touch /opt/jenkins/jenkinsfile.txt"
@@ -42,6 +41,7 @@ pipeline{
                sh "ls -lrth /opt/jenkins/"
                 junit '**/*.xml'
                 archiveArtifacts artifacts: '**/*.xml'
+                
             }
         }
         
