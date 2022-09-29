@@ -38,7 +38,7 @@ pipeline{
                sh " touch /opt/jenkins/jenkinsfile.txt"
                sh " chmod 755 /opt/jenkins/jenkinsfile.txt"
                sh "ls -lrth /opt/jenkins/"
-                junit '**/*.xml'
+                junit skipPublishingChecks: true, testResults: '**/*.xml'
                 archiveArtifacts artifacts: '**/*.xml'
                 sh "cat /var/lib/jenkins/workspace/pipeline/test.xml"
                 
