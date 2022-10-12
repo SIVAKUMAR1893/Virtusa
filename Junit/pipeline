@@ -67,12 +67,14 @@ pipeline{
               sh " ls -lrth /opt/jenkins/"
            }
     }
+    stage('Test') {
+            steps {
+                sh 'echo hi'
+                xunit checksName: '', thresholds: [failed()], tools: [JUnit(excludesPattern: '', pattern: '**/*.xml', stopProcessingIfError: true)]
+                
+            }
+        }
     
-      stage('Publish test results') {
-      steps {
-          junit skipPublishingChecks: true, testResults: '/c/Users/SIVAKUMARGAN/virtusa/Virtusa/test/*.xml'
-         // sh "test ${currentBuild.currentResult} != UNSTABLE"
-      }
-  }
+     
     }
 }
