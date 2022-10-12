@@ -70,7 +70,7 @@ pipeline{
     stage('Test') {
             steps {
                 sh 'echo hi'
-                xunit checksName: '', thresholds: [failed()], tools: [JUnit(excludesPattern: '', pattern: '**/*.xml', stopProcessingIfError: true)]
+               xunit([JUnit(deleteOutputFiles: true, failIfNotNew: true, pattern: '**/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
                 
             }
         }
