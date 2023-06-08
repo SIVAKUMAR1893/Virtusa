@@ -1,0 +1,36 @@
+pipeline { 
+agent any 
+    stages { 
+        stage ('Build') { 
+            steps { 
+                    sh "echo 'Running build phase. '" 
+                }
+ 
+        }
+        stage ('Test') { 
+            steps { 
+                sh "echo 'Running build phase. '" 
+                }
+        
+        }
+        stage ('QA') { 
+            steps { 
+                    sh "echo 'Running build phase. '"  
+                }
+        
+        }
+        stage ('Deploy') { 
+            steps { 
+                    sh "echo 'Running build phase. '"  
+                }
+        
+        }
+        stage ('Monitor') { 
+            steps { 
+                   sh "echo 'Running build phase. '"  
+                }
+ 
+        }
+ 
+    }           
+ }
